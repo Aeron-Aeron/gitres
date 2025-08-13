@@ -3,129 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Animated Portfolio</title>
+  <title>Terminal-style Portfolio</title>
   <style>
-    /* Reset & basic styles */
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background: #121212;
-      color: #eee;
-      overflow-x: hidden;
+      background: #000;
+      color: #0f0;
+      font-family: 'Fira Mono', monospace, monospace;
+      margin: 0; padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
     }
-
-    header {
-      background: #1f1f1f;
-      padding: 20px;
-      text-align: center;
-      font-size: 2rem;
-      letter-spacing: 3px;
-      animation: fadeInDown 1s ease forwards;
-    }
-
-    main {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    h2 {
-      color: #00bcd4;
-      margin-bottom: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.5s;
-    }
-
-    p {
-      line-height: 1.6;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.7s;
-    }
-
-    .projects {
-      margin-top: 50px;
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .project-card {
-      background: #1f1f1f;
-      padding: 20px;
+    .terminal {
+      background: #111;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,188,212,0.3);
-      cursor: pointer;
-      transform: scale(1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards;
-    }
-
-    .project-card:nth-child(1) { animation-delay: 1s; }
-    .project-card:nth-child(2) { animation-delay: 1.2s; }
-    .project-card:nth-child(3) { animation-delay: 1.4s; }
-
-    .project-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #00bcd4;
-    }
-
-    footer {
-      text-align: center;
+      box-shadow: 0 0 15px #0f0;
       padding: 20px;
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 60px;
-      border-top: 1px solid #333;
+      width: 90%;
+      max-width: 700px;
+      min-height: 400px;
+      overflow-y: auto;
+      user-select: none;
     }
-
-    /* Animations */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .line {
+      display: flex;
+      align-items: center;
+      white-space: pre-wrap;
+      font-size: 1.1rem;
     }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .prompt {
+      color: #0ff;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+    .cursor {
+      display: inline-block;
+      background: #0f0;
+      width: 10px;
+      height: 20px;
+      margin-left: 3px;
+      animation: blink 1s steps(2, start) infinite;
+      vertical-align: bottom;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.1%, 100% { opacity: 0; }
+    }
+    .code-block {
+      background: #222;
+      border-radius: 6px;
+      padding: 12px;
+      margin: 15px 0;
+      font-size: 1rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 5px #0f0;
     }
   </style>
 </head>
 <body>
 
-  <header>Welcome to My Portfolio</header>
+  <div class="terminal" id="terminal">
+    <!-- Typed lines will appear here -->
+  </div>
 
-  <main>
-    <section class="about">
-      <h2>About Me</h2>
-      <p>
-        Hi! I'm a small-time custom rom developer for Redmi Note 12 Pro 5G and this website is test.
-      </p>
-    </section>
+  <script>
+    const terminal = document.getElementById('terminal');
 
-    <section class="projects">
-      <div class="project-card" onclick="alert('Project 1 details coming soon!')">
-        <h3>Project 1: Cool Website</h3>
-        <p>A responsive website built with HTML, CSS, and JavaScript.</p>
-      </div>
-      <div class="project-card" onclick="alert('Project 2 details coming soon!')">
-        <h3>Project 2: JavaScript Game</h3>
-        <p>A simple game built to practice JavaScript and canvas animations.</p>
-      </div>
-      <div class="project-card" onclick="alert('Project 3 details coming soon!')">
-        <h3>Project 3: Portfolio Site</h3>
-        <p>This site itself! Built to showcase my projects and skills.</p>
-      </div>
-    </section>
-  </main>
+    const lines = [
+      "$ Hello, I am Aeron.",
+      "$ Welcome.",
+      "$ I just do few custom rom stuff for Redmi Note 12 Pro 5G.",
+      "$ I have two official roms that I maintain actively as:",
+      "  - Evolution X",
+      "  - The Pixel Project",
+      "",
+      "$ Here's a snippet of my JavaScript skills:",
+      "function greet(name) {",
+      "  return `Hello, ${name}!`;",
+      "}",
+      "console.log(greet('World'));",
+      "",
+      "$ Thank you for visiting!",
+    ];
 
-  <footer>
-    © 2025 Aeron | Built with ❤️ and GitHub Pages
-  </footer>
+    let currentLine = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (currentLine >= lines.length) return;
+
+      // Create a new line element if it's the first char of line
+      if (charIndex === 0) {
+        const lineEl = document.createElement('div');
+        lineEl.classList.add('line');
+
+        if (lines[currentLine].startsWith('$')) {
+          const promptSpan = document.createElement('span');
+          promptSpan.classList.add('prompt');
+          promptSpan.textContent = '$';
+          lineEl.appendChild(promptSpan);
+
+          // Text span for the line text after prompt
+          const textSpan = document.createElement('span');
+          lineEl.appendChild(textSpan);
+        } else {
+          // For code lines or normal text without prompt
+          const textSpan = document.createElement('span');
+          lineEl.appendChild(textSpan);
+        }
+        terminal.appendChild(lineEl);
+      }
+
+      const lineEl = terminal.children[terminal.children.length - 1];
+      const textSpan = lineEl.querySelector('span:last-child');
+      const fullText = lines[currentLine].startsWith('$') ? lines[currentLine].slice(2) : lines[currentLine];
+
+      if (charIndex < fullText.length) {
+        textSpan.textContent += fullText.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeLine, 50);
+      } else {
+        // Finished typing this line, add cursor blink to last char then move on
+        charIndex = 0;
+        currentLine++;
+
+        // Scroll down
+        terminal.scrollTop = terminal.scrollHeight;
+
+        // After typing line, if the line is code snippet start or finish, handle code block styling
+        // For demo simplicity, let's highlight the code block lines as a block after typing
+        // We'll create a code block for the JS snippet lines (lines 7 to 11)
+
+        if (currentLine === 7) {
+          // Start of code block - wrap last lines typed
+          const codeBlock = document.createElement('div');
+          codeBlock.classList.add('code-block');
+          terminal.appendChild(codeBlock);
+        } else if (currentLine > 7 && currentLine <= 11) {
+          // Append these lines inside the code block
+          const codeBlock = terminal.querySelector('.code-block');
+          const codeLine = terminal.children[terminal.children.length - 2]; // line before last (code lines are appended as normal lines)
+          if (codeLine) {
+            codeBlock.textContent += codeLine.textContent + '\n';
+            terminal.removeChild(codeLine);
+          }
+        } else if (currentLine === 12) {
+          // Finished code block typing
+        }
+
+        setTimeout(typeLine, 300);
+      }
+    }
+
+    typeLine();
+  </script>
 
 </body>
 </html>
