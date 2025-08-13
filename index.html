@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Animated Portfolio</title>
+  <style>
+    /* Reset & basic styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #121212;
+      color: #eee;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #00bcd4;
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    p {
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.7s;
+    }
+
+    .projects {
+      margin-top: 50px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .project-card {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,188,212,0.3);
+      cursor: pointer;
+      transform: scale(1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .project-card:nth-child(1) { animation-delay: 1s; }
+    .project-card:nth-child(2) { animation-delay: 1.2s; }
+    .project-card:nth-child(3) { animation-delay: 1.4s; }
+
+    .project-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00bcd4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 60px;
+      border-top: 1px solid #333;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Welcome to My Portfolio</header>
+
+  <main>
+    <section class="about">
+      <h2>About Me</h2>
+      <p>
+        Hi! I'm a small-time custom rom developer for Redmi Note 12 Pro 5G and this website is test.
+      </p>
+    </section>
+
+    <section class="projects">
+      <div class="project-card" onclick="alert('Project 1 details coming soon!')">
+        <h3>Project 1: Cool Website</h3>
+        <p>A responsive website built with HTML, CSS, and JavaScript.</p>
+      </div>
+      <div class="project-card" onclick="alert('Project 2 details coming soon!')">
+        <h3>Project 2: JavaScript Game</h3>
+        <p>A simple game built to practice JavaScript and canvas animations.</p>
+      </div>
+      <div class="project-card" onclick="alert('Project 3 details coming soon!')">
+        <h3>Project 3: Portfolio Site</h3>
+        <p>This site itself! Built to showcase my projects and skills.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Aeron | Built with ❤️ and GitHub Pages
+  </footer>
+
+</body>
+</html>
