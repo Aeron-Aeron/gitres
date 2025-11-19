@@ -224,11 +224,16 @@ main {
   box-shadow: var(--shadow-soft);
 }
 
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 2.4rem;
   align-items: stretch;
+}
+
+.hero > :only-child {
+  grid-column: 1 / -1;
 }
 
 .hero-copy h1 {
@@ -452,7 +457,7 @@ main {
 
 .skills__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 1.8rem;
 }
 
